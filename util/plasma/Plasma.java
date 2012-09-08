@@ -11,7 +11,7 @@ import java.awt.*;
 public class Plasma extends Applet {
 
     //Settings
-        int seed=Integer.MAX_VALUE/10000+21; //Seed for the pseudorandom value -> Same seed, same outcome   +21, +11
+        int seed=Integer.MAX_VALUE/10000+11; //Seed for the pseudorandom value -> Same seed, same outcome   +21, +11
         int width = 2048/2;                 //Width of one plasma tile.
                                             //Set this to height*(2^(n)), n >= 0 and integer for the function to work properly
         int height= 256/2;                  //Height of one plasma tile
@@ -24,8 +24,9 @@ public class Plasma extends Applet {
         boolean mixed = true;               //draw the mixed outcome of Perlin and plasma noise
         boolean plasma = true;             //draw just the plasma (overwritten by boolean mixed)
                                             //if both are false perlin will be drawn
-        float max=0;
+        int perlinOctaves=3;                //sets the amount of octaves added at the Perlin noise
 
+    float max=0;
     boolean color=false;
     Image Buffer;	//A buffer used to store the image
     Graphics Context;	//Used to draw to the buffer.
@@ -172,7 +173,7 @@ public class Plasma extends Applet {
     }
 
     public void calcPerlin(){
-        noise1.setOctaves(3);
+        noise1.setOctaves(perlinOctaves);
         for(int i=0; i<1200; i++){
             for(int j=0; j<512; j++){
                 perlinArray[i][j]= clip(((float) noise1.fBm3d((double) i * 0.005, 0, (double) j * 0.005) + 1) / 2);
